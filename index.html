@@ -27,7 +27,7 @@ function startDaily(){
   choices.append(b);
  });
  box.append(choices,feedback);
- box.scrollIntoView({behavior:'smooth',block:'nearest'});
+ // 今日の1問はこのカード内で表示し、別の場所へ自動スクロールしない。
 }
 function startTest(){ti=Number($('testSelect').value);ts=0;counts=[0,0,0];renderT()}
 function renderT(){let t=TESTS[ti],box=$('testBox');box.replaceChildren();if(ts>=t.questions.length){let top=Math.max(...counts),winners=counts.map((v,i)=>v===top?i:-1).filter(i=>i>=0);let n=winners[0];let r=el('div','result');r.append(el('h3','','✨ 診断結果'),el('p','',t.results[n]),el('small','','娯楽としてお楽しみください。'));let again=el('button','primary','もう一度診断');again.onclick=startTest;r.append(el('br'),again);box.append(r);return}let [q,opts]=t.questions[ts];box.append(el('h3','',`${t.title} ${ts+1}/${t.questions.length}`),el('p','',q));opts.forEach((o,i)=>{let b=el('button','choice',o);b.onclick=()=>{counts[i]++;ts++;renderT()};box.append(b)})}
