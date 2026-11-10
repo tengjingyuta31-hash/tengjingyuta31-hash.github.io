@@ -418,6 +418,20 @@ function renderAnime(){
   r.append(el('p','',`${answered}問中 ${st.score}問正解！`),el('p','',answered===0?'気になる作品があれば、また遊んでみてね。':st.score===answered?'答えた問題は全問正解！お見事です。':'解説を読んで、作品の知識を増やしてみよう！'));
   const retry=el('button','primary',st.work?'同じ作品でもう一度':'同じ難易度でもう一度');retry.onclick=()=>st.work?startAnimeWork(st.work):startAnime(st.level);r.append(retry);box.append(r);
   if(st.mistakes.length){const review=el('details','car-review');review.append(el('summary','',`間違えた${st.mistakes.length}問を復習する`));st.mistakes.forEach(({q,picked})=>{let item=el('div','car-review-item');item.append(el('h4','',q.work+'：'+q.q),el('p','',`あなたの答え：${picked} ／ 正解：${q.a}`),el('p','',q.e),animeSource(q));review.append(item)});box.append(review)}
+  if(st.work==='頭文字D' && answered>0){
+   const manga=el('div','result');
+   const firstVolume=el('a','jump','講談社で第1巻を見る ↗');
+   firstVolume.href='https://www.kodansha.co.jp/comic/products/0000006854';
+   firstVolume.target='_blank';
+   firstVolume.rel='noopener noreferrer';
+   manga.append(
+    el('h4','','📚 原作漫画『頭文字D』'),
+    el('p','muted','しげの秀一／講談社'),
+    el('p','','豆腐の配達で秋名の峠を走り慣れた藤原拓海。ハチロク（AE86）を操る彼の走りが、地元の走り屋たちを驚かせます。'),
+    firstVolume
+   );
+   box.append(manga);
+  }
   title.focus?.();return;
  }
  const q=st.questions[st.step];box.append(el('span','badge',q.work+' ／ '+ANIME_LABELS[q.level]));
